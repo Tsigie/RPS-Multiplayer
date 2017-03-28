@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+	<title>RPS-Multiplayer</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" herf="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Firebase Reference -->
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+</head>
+<body>
+<div class="container">
+	
+	<br>
+	<div class="jumbotron">
+		<h1 class="text-center">game</h1>
+		<h3 class="text-center">play</h3>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<h3 class="text-center"><strong>Today's Sale</strong>: pure vegie</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-4 col-sm-offset-2">
+							<img class="img-responsive thumbnail center-block" src="http://graphitepublications.com/wp-content/uploads/2017/04/5-coding-challenges-to-Help-you-Train-Brain.jpg" al"Coding Brain"></div>
+						<div class="col-sm-6">
+							<h3 class=""><strong>Highst Bidder:</strong> <span id="highst-bidder"></span></h3>
+						<div class=""><strong>Current Price:</strong><span id="higest-price"></span></h3>
+						<hr>
+						<h3 class="">Hurry! <strong><span id="connected-viewers"></span></strong> people have their eyes on the prize.</h3>	
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<h3 class="panel-title">Make Your Bid</h3>
+				</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label for="bidder-name">Your Name</label>
+							<input class="form-control" id="bidder-name" type="text">
+							</div>
+							<div class="form-group">
+								<label for="bidder-price">Your Price</label>
+								<input class="form-control" id="bidder-price" type="number">
+								</div>
+								<button class="btn btn-primary" id="submit-bid" type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>	
+</div>
+
+<script src="logic.js">
+	var config = {
+		apikey:
+		authDomain:
+		databaseURL:
+		storageBucket:
+	};
+
+	firebase.initializeApp(config);
+
+	var database = Firebase.database();
+
+	var initialBid = 0;
+	var initialBidder = "No one :-(";
+	var highPrice = initialBid;
+	var highBidder = initialBidder;
+
+	database.ref("/bidderData").on("value", function(snapshot) {
+		if (snapshot.child("highBidder").exists() && snapshot.child("highPrice").exists()) {
+		highBidder =snapshot.val().highBidder;
+		highPrice = parseInt(snapshot.val().highPrice);
+
+		$("#highst-bidder").html(snapshot.val().highBidder);
+		$("#higest-price").html("$" + snapshot.val().highPrice);
+
+		console.log(snapshot.val().highBidder);
+		console.log(snaoshot.val().highPrice);
+}
+
+else{
+	$("#highst-bidder").html(highBidder);
+	$("#higest-price").html("$" + highPrice);
+
+	console.log("Current High Price");
+	console.log(highBidder);
+	console.log(highPrice);
+	}
+
+}, function(errorObject) {
+	console.log("The read failed: " + errorObject.code);
+});
+
+	
+</script>
+</body>
+</html>

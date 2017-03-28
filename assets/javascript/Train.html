@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+	<title>Train Table</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ 
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+</head>
+<body>
+<div class="container">
+	
+	<br>
+	<div class="jumbotron" style="background-color:red ; color: white">
+		<h1 class="text-center">Anytime is Train Time</h1>
+		<h3 class="text-center">Choo Choo. Chee Chee</h3>
+	</div>
+	<div class="container" style="background-color: green; color: white">
+		<h2 class="text-left">Current Train Schedule</h2></div>
+
+	<table class="table table-striped">
+			<thead>
+				<tr>
+				<th>Train Name</th>
+				<th>Destination</th>
+				<th>Frequency(min)</th>
+				<th>Next Arrival</th>
+				<th>Minutes Away</th>
+				</tr>
+			</thead>
+
+			
+			 <tbody>
+      <tr>
+        <td>Volvo</td>
+        <td>Boston</td>
+        <td>10</td>
+        <td>04:45 PM</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Washed</td>
+        <td>New York</td>
+        <td>12</td>
+        <td>02:30</td>
+        <td>30</td>
+      </tr>
+     
+      <tr>
+       <td>Virginia</td>
+        <td>Boltimore</td>
+        <td>40</td>
+        <td>04:45 PM</td>
+        <td>20</td>
+      </tr>
+      <tr>
+        <td>Alamo</td>
+        <td>New York</td>
+        <td>12</td>
+        <td>02:30</td>
+        <td>30</td>
+      </tr>
+   
+    </tbody>
+  </table>
+			</tbody>
+
+		</table>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				<h3 class="panel-title">Add Train</h3>
+				</div>
+				<div class="panel-body">
+					<form>
+						<div class="form-group">
+							<label for="train-name">Train Name</label>
+							<input class="form-control" id="train-name" type="text">
+							</div>
+							<div class="form-group">
+								<label for="train-time">Destination</label>
+								<input class="form-control" id="train-time" type="number">
+								</div>
+								<div class="form-group">
+								<label for="train-time">First Train Time</label>
+								<input class="form-control" id="train-time" type="number">
+								</div>
+								<div class="form-group">
+								<label for="train-time">Frequency(min)</label>
+								<input class="form-control" id="train-time" type="number">
+								</div>
+								<button class="btn btn-primary" id="submit-time" type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>	
+</div>
+
+<script>
+	var config = {
+		apikey:
+		authDomain:
+		databaseURL:
+		storageBucket:
+	};
+
+	firebase.initializeApp(config);
+
+	var database = Firebase.database();
+
+	var train = 0;
+	var arrival-time = "12:00";
+	var current-time = Current Time;
+
+
+	database.ref("/trainData").on("value", function(snapshot) {
+		if (snapshot.child("train").exists() && snapshot.child("arrival-time").exists()) {
+		train =snapshot.val().train;
+		arrival-time = parseInt(snapshot.val().arrival-time);
+
+		$("#train").html(snapshot.val().train);
+		$("#arrival-time").html("$" + snapshot.val().arrival-time);
+
+		console.log(snapshot.val().train);
+		console.log(snaoshot.val().arrival-time);
+}
+
+else{
+	$("#train").html(train);
+	$("#arrival-time").html("$" + arrival-time);
+
+	console.log("Current arrival-time");
+	console.log(train);
+	console.log(arrival-time);
+	}
+
+}, function(errorObject) {
+	console.log("The read failed: " + errorObject.code);
+});
+
+	
+</script>
+</body>
+</html>
